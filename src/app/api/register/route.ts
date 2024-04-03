@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const userExists = await userModel.findOne({ username });
     if (userExists) {
       return NextResponse.json(
-        { error: "User already exists", data: null },
+        { message: "User already exists", data: null },
 
         { status: 400 }
       );
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     console.log(error);
     return NextResponse.json(
       {
-        error: "Something went wrong",
+        message: "Something went wrong",
         data: error,
       },
       { status: 500 }
