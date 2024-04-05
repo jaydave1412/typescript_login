@@ -57,6 +57,9 @@ export const authOptions: AuthOptions = {
       return session;
     },
   },
+  pages: {
+    signIn: "/",
+  },
 };
 
 const handler = nextAuth(authOptions);
