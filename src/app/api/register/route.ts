@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     const newUser = new userModel({
       name,
       username,
-      password: hashedPassword,
+      password: password,
       role,
       isAdmin,
     });

@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import LoginForm from "./loginForm";
+import LoginFormShadCN from "./loginFormShadcn";
 
 export function Login() {
   return (
@@ -21,13 +22,8 @@ export function Login() {
         </CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <LoginForm />
+        <LoginFormShadCN />
       </CardContent>
-      <CardFooter>
-        <Button type="submit" className="w-full">
-          Sign in
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

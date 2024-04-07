@@ -15,6 +15,7 @@ export const authOptions: AuthOptions = {
         password: {},
       },
       async authorize(credentials) {
+        console.log(credentials, "credentials");
         const { username, password } = credentials as {
           username: string;
           password: string;
@@ -23,14 +24,20 @@ export const authOptions: AuthOptions = {
           const connection = await connect();
           const user = await userModel.findOne({ username: username });
           if (!user) {
-            return null;
+            throw new Error("User not found", { cause: "auth" });
           }
+          console.log(user.password);
           const isPasswordValid = await bcrypt.compare(user.password, password);
-          if (!isPasswordValid) {
-            return null;
+          console.log(isPasswordValid);
+          if (isPasswordValid) {
+            throw new Error("Invalid Password", { cause: "auth" });
           }
           return user;
-        } catch (error) {
+        } catch (error: any) {
+          if (error?.cause === "auth") {
+            console.log(error, "error");
+            throw error;
+          }
           console.log(error);
           return null;
         }
@@ -42,8 +49,12 @@ export const authOptions: AuthOptions = {
     maxAge: 60 * 60 * 12, //12 hours
   },
   callbacks: {
+    signIn: (data) => {
+      console.log(data.user);
+      return true;
+    },
     jwt: async ({ token, user }) => {
-      console.log(user);
+      console.log(user, "user");
       if (user?.role) {
         token.role = user.role;
       }
